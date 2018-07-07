@@ -1,1 +1,8 @@
-http://www.studymongolian.net/technical/how-to-create-linux-input-method-editor/
+To install a custom table based sybol input method:
+
+1. edit the file "swedishTable", in which the string that identifies each symbol is defined.  
+2. run the script "install.sh", which uses the Python3 script convert.py to create a file "ibusTable".  The script also instals the file "ibusTable".  Administrator rights are requried.
+
+To enable the input method, open language settings and add the key board "MySymbols" under Swedish.  Then use super+space to toggle to "sym".  A symbol is entered by typing its identifying string and selecting it from the table that appears.
+
+
