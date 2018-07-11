@@ -1,4 +1,7 @@
+#!/usr/bin/python3
+
 import fileinput
+import sys
 
 def writeIBUSTable(lines, outputFile):
     nrSymbols = len(lines)
@@ -9,11 +12,21 @@ def writeIBUSTable(lines, outputFile):
         print(words[0], words[1].strip('\n'), frequency, file=outputFile, sep='\t')
 
 tableType = 'IBUS'
-language = 'sv_SE'
 
+language = 'sv_SE'
 tableFile = 'swedishTable'
-if language == 'sv_SE':
+language = input('input a language\nswedish, english\n')
+
+
+
+if language == 'swedish':
     tableFile = 'swedishTable'
+    language = 'swedish'
+elif language == 'english':
+    print('sorry, english not yet implemented')
+else :
+    print('language unknown\ndefaulting to swedish')
+    language ='swedish'
 
 with open('swedishTable') as f:
     lines = f.readlines()
@@ -28,8 +41,8 @@ if(tableType == 'IBUS'):
         if line == '###INSERT_HERE###\n':
             writeIBUSTable(lines, outputFile)
         elif line == 'LANGUAGES = sv_SE\n':
-            if(language == 'sv_SE'):
-                print('LANGUAGES = sv_SE', file=outputFile)
+            if(language == 'swedish'):
+                print('LANGUAGES = sv_SE, sv_FI', file=outputFile)
             else:
                 print(line.strip('\n'), file=outputFile)
         else:
