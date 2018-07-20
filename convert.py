@@ -2,6 +2,10 @@
 
 import fileinput
 import sys
+from os import listdir
+from os.path import isfile
+
+from sys import exit
 
 def writeIBUSTable(lines, outputFile):
     nrSymbols = len(lines)
@@ -16,22 +20,27 @@ def writeIBUSTable(lines, outputFile):
             
 tableType = 'IBUS'
 
-language = 'sv_SE'
-tableFile = 'swedishTable'
-language = input('input a language\nswedish, english\n')
+tables = listdir("./tables")
 
+table = input('input a table\n' + str(tables) + '\n')
 
+language = 'swedish'
+tableFile = 'swedish'
 
-if language == 'swedish':
-    tableFile = 'swedishTable'
+if table == 'swedish':
+    tableFile = 'swedish'
     language = 'swedish'
-elif language == 'english':
-    print('sorry, english not yet implemented')
+elif table == 'english':
+    tableFile = 'english'
+    language = 'english'
+elif set([table]) & set(tables):
+    tableFile = table
+    language = 'other'
 else :
-    print('language unknown\ndefaulting to swedish')
-    language ='swedish'
+    print('unknown table\ndefaulting to swedish')
 
-with open('swedishTable') as f:
+
+with open('./tables/' + tableFile) as f:
     lines = f.readlines()
     lines = list(line for line in lines if line.strip(' ').strip('\n') and (not line.startswith('#')))
 
@@ -44,8 +53,12 @@ if(tableType == 'IBUS'):
         if line == '###INSERT_HERE###\n':
             writeIBUSTable(lines, outputFile)
         elif line == 'LANGUAGES = sv_SE\n':
-            if(language == 'swedish'):
+            if language == 'swedish':
                 print('LANGUAGES = sv_SE, sv_FI', file=outputFile)
+            elif language == 'english':
+                print('LANGUAGES = en_US, en_GB', file=outputFile)
+            elif language == 'other':
+                print('LANGUAGES = other', file=outputFile)
             else:
                 print(line.strip('\n'), file=outputFile)
         else:
