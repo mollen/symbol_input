@@ -9,8 +9,11 @@ def writeIBUSTable(lines, outputFile):
         line = lines[lineID]
         words = line.split(' ')
         frequency = 1
-        print(words[0], words[1].strip('\n'), frequency, file=outputFile, sep='\t')
-
+        if(len(words) >= 2):
+            print(words[0], words[1].strip('\n'), frequency, file=outputFile, sep='\t')
+        else:
+            print("line", lineID, "not properly formatted: ", line)
+            
 tableType = 'IBUS'
 
 language = 'sv_SE'
