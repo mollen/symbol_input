@@ -1,4 +1,8 @@
-To install a custom table based sybol input method:
+Required packages on Ubuntu 18.04:
+
+    ibus-table
+
+To install a custom table-based sybol input method:
 
 1. edit the file "swedishTable", in which the string that identifies each symbol is defined.  
 2. run the script "install.sh", which uses the Python3 script convert.py to create a file "ibusTable".  The script also installs the file "ibusTable".  Administrator rights are requried.
